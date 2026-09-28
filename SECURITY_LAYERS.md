@@ -2,6 +2,12 @@
 
 This is a build checklist, not a claim that NEC checkout is live. Do not count cloned repositories as independent security gates. Keep upstream patches flowing; fork only to make a specific reviewed change. Do not write a new cryptographic algorithm.
 
+## Everyday wallet experience
+
+The same browser/device wallet opens automatically for viewing, collecting, and ordinary use. No fingerprint prompt on every page load or every small action. A fingerprint on the phone can unlock a passkey; the server verifies the passkey's cryptographic response and never receives a fingerprint image. Passkeys are an optional way to protect recovery and authorize higher-risk transfers.
+
+For a transfer, show the buyer the exact item, seller wallet label, selected assets, amount, and recipient, then require a deliberate **Confirm transfer** action. A known device can use a normal confirmation for low-risk transfers. Ask for a passkey/device unlock when adding a device, recovering access, changing payout or recovery details, or when a transfer crosses a configurable risk/amount threshold. Provide a simple freeze and dispute path if an unfamiliar transaction appears. Keep thresholds server-side and do not claim a fingerprint alone identifies the natural person using a shared device.
+
 ## The debit invariant
 
 The balance is a **derived view of server-owned ledger entries**, never a mutable number in a browser file. For each asset, the backend must validate buyer identity, listing and recipient, available balance, and a unique idempotency key. Within one D1 database, a transaction writes matching debit and credit entries and a receipt, or none of them. SQL constraints/triggers reject negative balances and ownership changes that do not match the buyer. The client cannot submit its own balance or edit an earlier event. Music Quant ownership uses one owner row per Quant; a transfer conditionally updates the current owner and writes the transfer receipt in the same D1 transaction. Ordinary Quants use balanced signed entries. StarCoin spendable balances need an integer hundredth-unit ledger; share progress stays separate.
@@ -14,7 +20,7 @@ A hash chain is useful to detect altered history, but an attacker with database 
 
 1. One Cloudflare account ID shared by all Infinity sites; explicit device binding and revocation.
 2. Passkeys for new-device binding and high-risk transfers, with optional email plus recovery code.
-3. Short-lived, purpose-bound transfer authorization showing item, seller, assets, exact amounts, and recipient.
+3. Short-lived, purpose-bound transfer authorization showing item, seller, assets, exact amounts, and recipient; routine confirmation stays simple, with device unlock for higher-risk changes.
 4. Server-side authorization of **every** debit and owner change; never trust a wallet ID supplied by a page.
 5. Seller-owned listing registry and exact server-calculated quote; arbitrary page text cannot start a charge.
 6. Unique idempotency keys and replay detection for quotes, purchase intents, and each ledger leg.
