@@ -6,7 +6,7 @@ This is a build checklist, not a claim that NEC checkout is live. Do not count c
 
 The same browser/device wallet opens automatically for viewing, collecting, and ordinary use. No fingerprint prompt on every page load or every small action. A fingerprint on the phone can unlock a passkey; the server verifies the passkey's cryptographic response and never receives a fingerprint image. Passkeys are an optional way to protect recovery and authorize higher-risk transfers.
 
-For a transfer, show the buyer the exact item, seller wallet label, selected assets, amount, and recipient, then require a deliberate **Confirm transfer** action. A known device can use a normal confirmation for low-risk transfers. Ask for a passkey/device unlock when adding a device, recovering access, changing payout or recovery details, or when a transfer crosses a configurable risk/amount threshold. Provide a simple freeze and dispute path if an unfamiliar transaction appears. Keep thresholds server-side and do not claim a fingerprint alone identifies the natural person using a shared device.
+For a purchase, show the buyer the exact item, seller, assets, and total beside **Buy now**. Tapping that button is the deliberate authorization; do not add a second confirmation for an ordinary purchase. If shipping details are missing, collect them before the final Buy now action. Ask for a passkey/device unlock when adding a device, recovering access, changing payout or recovery details, or when a transfer crosses a configurable risk/amount threshold. Provide a simple freeze and dispute path if an unfamiliar transaction appears. Keep thresholds server-side and do not claim a fingerprint alone identifies the natural person using a shared device.
 
 ## The debit invariant
 
@@ -20,7 +20,7 @@ A hash chain is useful to detect altered history, but an attacker with database 
 
 1. One Cloudflare account ID shared by all Infinity sites; explicit device binding and revocation.
 2. Passkeys for new-device binding and high-risk transfers, with optional email plus recovery code.
-3. Short-lived, purpose-bound transfer authorization showing item, seller, assets, exact amounts, and recipient; routine confirmation stays simple, with device unlock for higher-risk changes.
+3. Short-lived, purpose-bound purchase intent bound to the displayed item, seller, assets, exact amounts, and recipient; Buy now is the ordinary authorization, with device unlock reserved for higher-risk changes.
 4. Server-side authorization of **every** debit and owner change; never trust a wallet ID supplied by a page.
 5. Seller-owned listing registry and exact server-calculated quote; arbitrary page text cannot start a charge.
 6. Unique idempotency keys and replay detection for quotes, purchase intents, and each ledger leg.
