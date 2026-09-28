@@ -1,6 +1,6 @@
 # NEC
 
-Design documents: [wallet recovery](WALLET_RECOVERY.md) and [security layers and upstream projects](SECURITY_LAYERS.md).
+Design documents: [Buy Now point of sale](POS_FLOW.md), [wallet recovery](WALLET_RECOVERY.md), and [security layers and upstream projects](SECURITY_LAYERS.md).
 
 NEC coordinates checkout for items listed across the Infinity sites. A price such as **$5.15** is expressed as **5 Quants and 15 StarCoin hundredths (0.15 StarCoin)**; the hundredth units are the change side of the quote. A balance of 14.60 becomes 14.45 after that change payment. These are application units, not a cash payment or a dollar redemption promise.
 
@@ -12,7 +12,7 @@ NEC needs an authenticated, server-side checkout with a seller-owned listing, bu
 
 ## Integration contract
 
-Sites mark a real item with a listing ID and open NEC checkout. NEC verifies that listing and its seller wallet on the server, displays the quote to the buyer, and requires an explicit Buy action. Arbitrary page text or scraped prices are not authorization to move tokens. A Cloudflare receipt is the only success state.
+Sites mark a real item with a listing ID, show the full quote, and provide a Buy now button. That click is the purchase authorization when delivery details are already available. For a physical item without an address, the first tap collects shipping details and the final Buy now tap authorizes payment. NEC verifies the listing and seller wallet on the server; the buyer does not enter token amounts. Arbitrary page text or scraped prices are not authorization to move tokens. A Cloudflare receipt is the only success state.
 
 ## Before enabling live payments
 
