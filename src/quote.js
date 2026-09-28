@@ -3,7 +3,8 @@
 // and recomputes this result before committing a sale.
 export function priceUnits(cents) {
   if (!Number.isSafeInteger(cents) || cents < 0) throw new RangeError('invalid_price_cents');
-  return { quantCount: Math.floor(cents / 100), starCoins: cents % 100 };
+  const starCoinTenths = cents % 100;
+  return { quantCount: Math.floor(cents / 100), starCoinTenths, starCoins: starCoinTenths / 10 };
 }
 
 export function musicalContentScore(quant) {
@@ -32,11 +33,13 @@ export function selectLowestContent(musicQuants, count) {
   ).slice(0, count).map(quant => quant.id);
 }
 
-export function quote(cents, musicQuants, ordinaryQuantBalance) {
+export function quote(cents, musicQuants, ordinaryQuantBalance, starCoinBalanceTenths) {
   const units = priceUnits(cents);
   const musicIds = selectLowestContent(musicQuants, units.quantCount);
   const ordinaryCount = units.quantCount - musicIds.length;
   if (!Number.isSafeInteger(ordinaryQuantBalance) || ordinaryQuantBalance < ordinaryCount)
     return { ok: false, reason: 'insufficient_quants', ...units };
+  if (starCoinBalanceTenths !== undefined && (!Number.isSafeInteger(starCoinBalanceTenths) || starCoinBalanceTenths < units.starCoinTenths))
+    return { ok: false, reason: 'insufficient_star_coin_tenths', ...units };
   return { ok: true, ...units, musicQuantIds: musicIds, ordinaryQuantCount: ordinaryCount };
 }
