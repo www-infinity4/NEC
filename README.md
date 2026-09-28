@@ -1,5 +1,7 @@
 # NEC
 
+Design documents: [wallet recovery](WALLET_RECOVERY.md) and [security layers and upstream projects](SECURITY_LAYERS.md).
+
 NEC coordinates checkout for items listed across the Infinity sites. A price such as **$5.15** is expressed as **5 Quants and 15 StarCoin hundredths (0.15 StarCoin)**; the hundredth units are the change side of the quote. A balance of 14.60 becomes 14.45 after that change payment. These are application units, not a cash payment or a dollar redemption promise.
 
 ## Current status
