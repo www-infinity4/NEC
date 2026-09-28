@@ -1,12 +1,12 @@
 # NEC
 
-NEC coordinates checkout for items listed across the Infinity sites. A price such as **$5.15** is expressed as **5 Quants and 15 StarCoins**; these are application units, not a cash payment or a dollar redemption promise.
+NEC coordinates checkout for items listed across the Infinity sites. A price such as **$5.15** is expressed as **5 Quants and 15 StarCoin tenths (1.5 StarCoins)**; the ten small units per StarCoin are the change side of the quote. These are application units, not a cash payment or a dollar redemption promise.
 
 ## Current status
 
 The wallet ledger is live in Cloudflare: ordinary Quants and Music Quant ownership are in `infinity-ledger`, while StarCoin account balances are in `starquest-ledger`. These are separate D1 databases, so a mixed-asset checkout is not atomic by default. **Do not debit a buyer or mark an item sold from a browser-only transfer sequence.**
 
-NEC needs an authenticated, server-side checkout with a seller-owned listing, buyer confirmation, idempotency key, recorded quote, conditional debits, matching credits, and reconciliation for interrupted settlement. Music Quant selection should prefer lower musical-content scores and be confirmed on the server against current ownership. StarCoins have no selection ranking and are transferred by balance. Seller and buyer receipts carry the same transaction ID.
+NEC needs an authenticated, server-side checkout with a seller-owned listing, buyer confirmation, idempotency key, recorded quote, conditional debits, matching credits, and reconciliation for interrupted settlement. Music Quant selection should prefer lower musical-content scores and be confirmed on the server against current ownership. StarCoin tenths have no selection ranking and are transferred by balance. The present StarQuest schema stores whole `star_coins` and `pending_share_credits` (0–9 tenths); settlement must update that combined tenth-unit balance without treating 15 tenths as 15 whole coins. Infinity tokens and Alien tokens are separately owned assets: their owners set asking prices, and NEC must not apply this fixed Quant/StarCoin conversion to those listings. Seller and buyer receipts carry the same transaction ID.
 
 ## Integration contract
 
